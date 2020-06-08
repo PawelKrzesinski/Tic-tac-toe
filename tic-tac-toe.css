@@ -115,7 +115,7 @@ body{
 	cursor: not-allowed;
 }
 
-.win__screen{ 
+.blue__screen{ 
 	display: none;
 	position: absolute;
 	width: 100%;
@@ -125,21 +125,21 @@ body{
 	justify-content: center;
 	align-items: center;
 }
-.win__screen h1 {
+.blue__screen h1 {
 	font-size: 3rem;
 	color: red;
 }
 
-.win__screen button {
+.blue__screen button {
 	width: calc(var(--cellSize) * 2.5);
 	height: calc(var(--cellSize) * 0.7);
-	font-size: 2rem;
+	font-size: 1.5rem;
 	border: 2px solid white;
 	background: rgba(0, 0, 240, 0.9);
 	color: white;
 }
 
-.win__screen button:hover {
+.blue__screen button:hover {
 	background: white;
 	border: 2 px solid rgba(0, 0, 240, 0.9);
 	color: rgba(0, 0, 240, 0.9);
