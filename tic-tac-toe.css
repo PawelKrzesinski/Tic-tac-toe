@@ -1,0 +1,195 @@
+:root {
+	--cellSize : 100px;
+}
+
+
+
+
+body{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  display: block;
+  text-align: center;
+  color: yellow;
+  background-color: black;
+  width: 20%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.scores {
+	width: 100%;
+	height: auto;
+	font-size: 25px;
+	font-weight: bold;
+	font-family: monospace;
+	color: black;
+	letter-spacing: 0.1em;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+.board {
+	display: grid;
+	grid-template-columns: repeat(3, 100px);
+	margin-bottom: 50px;
+	width: 400px;
+	height: auto;
+}
+
+.cell:not(.x):hover,
+.cell:not(.o):hover {
+	background-color: red;
+}
+
+
+
+.cell {
+	width: var(--cellSize);
+	height: var(--cellSize);
+	border: 5px solid black;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.cell:nth-child(3n + 1) {
+	border-left: 0;
+}
+
+.cell:nth-child(3n + 3) {
+	border-right: 0;
+}
+
+.cell:last-child,
+.cell:nth-child(7),
+.cell:nth-child(8){
+	border-bottom: 0;
+	border-top: 0;
+}
+.cell.x::after,
+.cell.x::before {
+	position: absolute;
+	content: '';
+	background-color: black;
+}
+.cell.x::before{
+	width: calc(var(--cellSize) * 0.9);
+	height: calc(var(--cellSize) * 0.15);
+	transform: rotate(45deg)
+}
+.cell.x::after {
+	width: calc(var(--cellSize) * 0.9);
+	height: calc(var(--cellSize) * 0.15);
+	transform: rotate(135deg)
+}
+.cell.o::after {
+	content: '';
+	background: white;
+	width: calc(var(--cellSize)* 0.7);
+	height: calc(var(--cellSize)* 0.7);
+	align-self: center;
+	justify-self: center;
+	border-radius: 50%;
+	border: 10px solid black;
+	transform: translateX(-3%)
+}
+
+.cell.x,
+.cell.o {
+	cursor: not-allowed;
+}
+
+
+.cell:hover::before,
+.cell:hover::after{
+	content: "";
+	color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.win__screen{ 
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 240, 0.9);
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.win__screen h1 {
+	font-size: 3rem;
+	color: red;
+}
+
+.win__screen button {
+	width: calc(var(--cellSize) * 2.5);
+	height: calc(var(--cellSize) * 0.7);
+	font-size: 2rem;
+	border: 2px solid white;
+	background: rgba(0, 0, 240, 0.9);
+	color: white;
+}
+
+.win__screen button:hover {
+	background: white;
+	border: 2 px solid rgba(0, 0, 240, 0.9);
+	color: rgba(0, 0, 240, 0.9);
+}
