@@ -4,10 +4,9 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="tic-tac-toe.css">
     <title>TIC TAC TOE IN JS</title>
-    <h1 class='header'>TIC TAC TOE in JS</h1>
+    <h1 class='turn__current'></h1>
   </head>
 <body>
-	<h2 onload="document.innerHTML(currentPlayer)" id='currentPlayerH2'></h2>
 	<div class='board'>
 		<div class="cell"></div>
 		<div class="cell"></div>
@@ -20,12 +19,12 @@
 		<div class="cell"></div>
 	</div>
 	<div class='scores'>
-		<div>Player 1 Wins: <span id="score-x">0</span></div>
-		<div>Ties: <span id="score-tie">0</span> </div>
-		<div>Player 2 Wins: <span id="score-o">0</span> </div>
+		<div>Player 1 Wins: <span id="score-x"></span></div>
+		<div>Draws: <span id="score-draw"></span> </div>
+		<div>Player 2 Wins: <span id="score-o"></span> </div>
 	</div>
 	<div class="win__screen">
-		<h1>X's WIN !</h1>
+		<h1></h1>
 		<button>RESET GAME</button>
 	</div>
 <script src="./tictactoe.js"></script>
