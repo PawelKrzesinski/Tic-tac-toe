@@ -1,3 +1,9 @@
+const board = document.querySelector('.board');
+const cells = Array.from(board.children);
+const currentTurn = document.querySelector('.turn__current');
+const blueScreenButton = document.querySelector('.blue__screen__btn');
+const blueScreen = document.querySelector('.blue__screen');
+const msg = document.querySelector('.message');
 let playerOneWinsCount = document.getElementById('score-x');
 let playerTwoWinsCount = document.getElementById('score-o');
 let drawCount = document.getElementById('score-draw');
@@ -6,12 +12,11 @@ let scoreO = 0;
 let draws = 0;
 let winner;
 let currentPlayer;
-const board = document.querySelector('.board');
-const cells = Array.from(board.children);
-const currentTurn = document.querySelector('.turn__current');
+
 const players = ['x', 'o'];
 const playerX = players[0];
 const playerO = players[1];
+
 const win_conditions = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -23,93 +28,117 @@ const win_conditions = [
 	[2, 4, 6]
 ];
 
-
 playerOneWinsCount.innerHTML = scoreX;
 playerTwoWinsCount.innerHTML = scoreO;
 drawCount.innerHTML = draws;
 
-function decideWhoStarts () {
+startGame();
+
+function startGame () {
+	blueScreen.style.display = 'flex';
+	blueScreenButton.innerHTML = "START !";
+	blueScreenButton.addEventListener('click', () => {
+		blueScreen.style.display = 'none';	
+		makeMove();
+	});
 	currentPlayer = Math.floor(Math.random() * 2);
 	if(currentPlayer == 0){
 		currentPlayer = playerX;
 		board.classList.remove("o__turn");
 		board.classList.add("x__turn");
-		alert('X\'s currentPlayer')
+		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
+		msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
 	} else {
 		currentPlayer = playerO;
 		board.classList.remove("x__turn");
 		board.classList.add("o__turn");
-		alert('O\'s currentPlayer')
+		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
+		msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
 	}
-	currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`
-}
 
-decideWhoStarts();
+	
+}
 
 function makeMove() {
-	cells.forEach(cell => {
-		cell.addEventListener('click', e => {		
-			if(currentPlayer == playerX){
-				e.target.classList.add(currentPlayer);
-				if(hasWon(currentPlayer)){
-					winner = currentPlayer;
-					console.log(winner);
-					
-					endGame(scoreX);
-				} else if(checkForDraw()) {
-					endGame(draws);
-				} else {
-				board.classList.remove("x__turn");
-				board.classList.add("o__turn");
-				currentPlayer = players[1];
-				currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`
-				}
-			} else {
-				e.target.classList.add(currentPlayer);
-				if(hasWon(currentPlayer)){
-					console.log('winner');
-					winner = currentPlayer;
-					endGame(scoreO);
-				} else if(checkForDraw()) {
-					console.log('draw');
-					endGame(draws);
-				} else {
-				board.classList.remove("o__turn");
-				board.classList.add("x__turn");
-				currentPlayer = players[0];
-				currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`	
-				}	
-			}
-			
-			//endGame(currentPlayer);
-		}, { once: true})
-	})
+	cells.forEach(cell => {	
+		cell.addEventListener('click', clickHandler, { once: true});
+	});
 }
 
-makeMove();
+function clickHandler(e) {
+	if(currentPlayer == playerX){
+		e.target.classList.add(currentPlayer);
+		if(hasWon(currentPlayer)){
+			winner = currentPlayer;
+			scoreX += 1;		
+			playerOneWinsCount.innerHTML = scoreX;
+			endGame();
+		} else if(checkForDraw(currentPlayer)) {
+			draws += 1;
+			drawCount.innerHTML = draws;
+			endGame();
+		} else {
+		board.classList.remove("x__turn");
+		board.classList.add("o__turn");
+		currentPlayer = players[1];
+		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
+		}
+	} else {
+		e.target.classList.add(currentPlayer);
+		if(hasWon(currentPlayer)){
+			winner = currentPlayer;
+			scoreO += 1;
+			playerTwoWinsCount.innerHTML = scoreO;
+			endGame();
+		} else if(checkForDraw(currentPlayer)) {
+			draws += 1;
+			drawCount.innerHTML = draws;
+			endGame();
+		} else {
+		board.classList.remove("o__turn");
+		board.classList.add("x__turn");
+		currentPlayer = players[0];
+		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`	;
+		}	
+	}
+}
 
 function checkForDraw() {
 	return cells.every(cell => {
 	return cell.classList.contains(players[1]) || 
 	cell.classList.contains(players[0]);
-})
-}
-
-
-function endGame (scoreX, scoreO, draws, winner){
-	if(winner == players[0]){
-		scoreX += 1;
-	} else if(winner == players[1]){
-		scoreO += 1;
-	} else {
-		draws += 1;
-	}
+});
 }
 
 function hasWon(currentPlayer) {
 	return win_conditions.some(condition => {
 		return condition.every(index => {
 			return cells[index].classList.contains(currentPlayer);
-		})
-	})
+		});
+	});
+}
+
+function endGame() {
+	if(checkForDraw()) {
+		blueScreen.style.display = 'flex';
+		msg.innerHTML = `<h1>It's a draw !</h1>`;
+		blueScreenButton.innerHTML = 'Restart';
+	}
+	if(winner != ""){
+		blueScreen.style.display = 'flex';
+		msg.innerHTML = `<h1>${winner.toUpperCase()} has won !</h1>`;
+		blueScreenButton.innerHTML = 'Restart';
+	}
+	blueScreenButton.addEventListener('click', () => {
+		cells.forEach(cell => {
+			cell.classList = 'cell';
+			cell.removeEventListener('click', clickHandler);
+		});
+		msg.innerHTML = '';
+		winner = '';
+		currentPlayer = '';
+		blueScreen.style.display = 'none';
+		startGame();
+	});
+
 }
