@@ -34,29 +34,31 @@ drawCount.innerHTML = draws;
 
 startGame();
 
+function setCurrentPlayer(){
+	currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
+	msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
+}
+
 function startGame () {
-	blueScreen.style.display = 'flex';
-	blueScreenButton.innerHTML = "START !";
-	blueScreenButton.addEventListener('click', () => {
-		blueScreen.style.display = 'none';	
-		makeMove();
-	});
 	currentPlayer = Math.floor(Math.random() * 2);
 	if(currentPlayer == 0){
 		currentPlayer = playerX;
 		board.classList.remove("o__turn");
-		board.classList.add("x__turn");
-		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
-		msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
+		board.classList.add("x__turn");	
 	} else {
 		currentPlayer = playerO;
 		board.classList.remove("x__turn");
 		board.classList.add("o__turn");
-		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
-		msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
 	}
-
+	setCurrentPlayer();
+	blueScreen.style.display = 'flex';
+	blueScreenButton.innerHTML = "START !";
+	blueScreenButton.addEventListener('click', () => {
+		blueScreen.style.display = 'none';	
+		
+	});
 	
+	makeMove();
 }
 
 function makeMove() {
@@ -81,7 +83,7 @@ function clickHandler(e) {
 		board.classList.remove("x__turn");
 		board.classList.add("o__turn");
 		currentPlayer = players[1];
-		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
+		setCurrentPlayer();
 		}
 	} else {
 		e.target.classList.add(currentPlayer);
@@ -98,9 +100,10 @@ function clickHandler(e) {
 		board.classList.remove("o__turn");
 		board.classList.add("x__turn");
 		currentPlayer = players[0];
-		currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`	;
+		setCurrentPlayer();
 		}	
 	}
+
 }
 
 function checkForDraw() {
@@ -129,16 +132,19 @@ function endGame() {
 		msg.innerHTML = `<h1>${winner.toUpperCase()} has won !</h1>`;
 		blueScreenButton.innerHTML = 'Restart';
 	}
-	blueScreenButton.addEventListener('click', () => {
-		cells.forEach(cell => {
-			cell.classList = 'cell';
-			cell.removeEventListener('click', clickHandler);
-		});
-		msg.innerHTML = '';
-		winner = '';
-		currentPlayer = '';
-		blueScreen.style.display = 'none';
-		startGame();
-	});
+	blueScreenButton.addEventListener('click', clearTable);
+}
 
+function clearTable () {
+	cells.forEach(cell => {
+		cell.classList = 'cell';
+		cell.removeEventListener('click', clickHandler);
+	});
+	winner = '';
+	currentPlayer = '';
+	currentTurn.innerHTML = '';
+	msg.innerHTML = '';
+	blueScreen.style.display = 'none';
+	blueScreenButton.removeEventListener('click', clearTable);
+	startGame();
 }
