@@ -34,7 +34,7 @@ drawCount.innerHTML = draws;
 
 startGame();
 
-function setCurrentPlayer(){
+function displayCurrentPlayer(){
 	currentTurn.innerHTML = `Current Player - ${currentPlayer.toUpperCase()}`;
 	msg.innerHTML = `<h1>${currentPlayer.toUpperCase()} starts the game !</h1>`;
 }
@@ -50,12 +50,11 @@ function startGame () {
 		board.classList.remove("x__turn");
 		board.classList.add("o__turn");
 	}
-	setCurrentPlayer();
+	displayCurrentPlayer();
 	blueScreen.style.display = 'flex';
 	blueScreenButton.innerHTML = "START !";
 	blueScreenButton.addEventListener('click', () => {
-		blueScreen.style.display = 'none';	
-		
+	blueScreen.style.display = 'none';		
 	});
 	
 	makeMove();
@@ -83,7 +82,7 @@ function clickHandler(e) {
 		board.classList.remove("x__turn");
 		board.classList.add("o__turn");
 		currentPlayer = players[1];
-		setCurrentPlayer();
+		displayCurrentPlayer();
 		}
 	} else {
 		e.target.classList.add(currentPlayer);
@@ -100,10 +99,9 @@ function clickHandler(e) {
 		board.classList.remove("o__turn");
 		board.classList.add("x__turn");
 		currentPlayer = players[0];
-		setCurrentPlayer();
+		displayCurrentPlayer();
 		}	
 	}
-
 }
 
 function checkForDraw() {
