@@ -8,26 +8,18 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.header {
-  display: block;
-  text-align: center;
-  color: yellow;
-  background-color: black;
-  width: 20%;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  letter-spacing: 0.1em;
 }
 
 .scores {
 	width: 100%;
-	height: auto;
 	font-size: 25px;
 	font-weight: bold;
 	font-family: monospace;
 	color: black;
-	letter-spacing: 0.1em;
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
@@ -35,9 +27,10 @@ body{
 .board {
 	display: grid;
 	grid-template-columns: repeat(3, 100px);
-	margin-bottom: 50px;
-	width: 400px;
-	height: auto;
+  grid-template-columns: repeat(3, 100px);
+	margin-bottom: 30px;
+	width: 300px;
+	height: 300px;
 }
 
 .cell {
@@ -49,6 +42,7 @@ body{
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+  margin:0 !important;
 }
 
 .cell:first-child,
@@ -119,7 +113,7 @@ body{
 	display: none;
 	position: absolute;
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 	background-color: rgba(0, 0, 240, 0.9);
 	flex-direction: column;
 	justify-content: center;
