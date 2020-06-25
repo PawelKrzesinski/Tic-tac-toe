@@ -125,7 +125,7 @@ function endGame() {
 		msg.innerHTML = `<h1>It's a draw !</h1>`;
 		blueScreenButton.innerHTML = 'Restart';
 	}
-	if(winner != ""){
+	else if(winner != ""){
 		blueScreen.style.display = 'flex';
 		msg.innerHTML = `<h1>${winner.toUpperCase()} has won !</h1>`;
 		blueScreenButton.innerHTML = 'Restart';
